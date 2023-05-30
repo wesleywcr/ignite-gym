@@ -1,9 +1,14 @@
-import {Input as InputNativeBase, IInputProps} from 'native-base'
+import {Input as InputNativeBase, IInputProps, FormControl} from 'native-base'
+
+type Props = IInputProps &{
+  errorMessage?:string |null
+}
 
 
-
-export function Input({...rest}: IInputProps) {
+export function Input({errorMessage=null,isInvalid,...rest}: Props ) {
+  const invalid = !!errorMessage || isInvalid
   return (
+    <FormControl isInvalid={invalid}  mb={4}>
     <InputNativeBase
       bg='gray.700'
       h={14}
@@ -12,14 +17,23 @@ export function Input({...rest}: IInputProps) {
       fontSize={'md'}
       color={'white'}
       fontFamily={'body'}
-      mb={4}
       placeholderTextColor={'gray.300'}
+      isInvalid={invalid}
       _focus={{
         bg:'gray.700',
         borderWidth:1,
         borderColor:'green.500'
       }}
+      _invalid={{
+        borderWidth:'1',
+        borderColor:'red.500'
+      }}
+    
       {...rest}
     />
+    <FormControl.ErrorMessage>
+      {errorMessage}
+    </FormControl.ErrorMessage>
+    </FormControl>
   );
 }
