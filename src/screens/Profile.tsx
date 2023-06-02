@@ -31,13 +31,13 @@ export function Profile(){
       if (!photoSelected.canceled) {
         const photoInfo = FileSystem.getInfoAsync(photoSelected.assets[0].uri)
       console.log('if',(await photoInfo).uri)
-      //    if(photoInfo && (photoInfo.size/1024/1024)>5){
-      //   return  Toast.show({
-      //     title:'Essa imagem é muito grande. Escolha uma até 5mb.',
-      //     placement:'top',
-      //     bgColor:'red.500'
-      //   })
-      //  }
+         if(photoInfo && (photoInfo.size/1024/1024)>5){
+        return  Toast.show({
+          title:'Essa imagem é muito grande. Escolha uma até 5mb.',
+          placement:'top',
+          bgColor:'red.500'
+        })
+       }
         setUserPhoto(photoSelected.assets[0].uri)
       }
     }catch(error:any){
@@ -95,6 +95,7 @@ export function Profile(){
         mb={2}
         alignSelf={'flex-start'}
         mt={12}
+        fontFamily={'heading'}
         >
          Alterar senha
         </Heading>
