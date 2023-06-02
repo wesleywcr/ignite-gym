@@ -124,7 +124,7 @@ export function SignUp() {
     <Button 
     title='Voltar para login'
      variant={'outline'}
-     mt={24}
+     mt={12}
      onPress={()=> navigation.goBack()}
      />
 
