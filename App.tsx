@@ -8,7 +8,7 @@ import {
 import { NativeBaseProvider } from 'native-base';
 import { THEME } from './src/theme';
 import { Loading } from '@components/Loading';
-
+import { AuthContext, AuthContextProvider} from '@contexts/AuthContext'
 import { Routes } from '@routes/index';
 
 export default function App() {
@@ -21,8 +21,11 @@ export default function App() {
       backgroundColor={'transparent'}
       translucent
       />
-      
+     <AuthContextProvider>
       {fontsLoaded ? <Routes/> : <Loading/>}
+      </AuthContextProvider>
+
+
      
     </NativeBaseProvider>
   );
