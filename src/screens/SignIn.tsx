@@ -1,16 +1,53 @@
 
-import { VStack,Image, Text, Center, Heading, ScrollView } from 'native-base';
-import React from 'react';
+import { VStack,Image, Text, Center, Heading, ScrollView, useToast } from 'native-base';
+import React, { useState } from 'react';
 import BackgroundImage from '@assets/background.png';
 import LogoSvg from '@assets/logo.svg';
 import { Input } from '@components/Input';
 import { Button } from '@components/Button';
 import { useNavigation } from '@react-navigation/native';
 import { AuthNavigatorRouteProps } from '@routes/auth.routes';
+import { useAuth } from '@hooks/useAuth';
+import { useForm } from 'react-hook-form';
+import { AppError } from '@utils/AppError';
+
+type FormData ={
+  email:string;
+  password:string;
+}
 export function SignIn() {
+  const {control,handleSubmit, formState:{errors}} = useForm<FormData>();
+
   const navigation = useNavigation<AuthNavigatorRouteProps>();
+
+  const toast = useToast();
+  const {signIn} = useAuth();
+
+  const [isLoading, setIsLoading] = useState(false);
+
+  function handleNewAccount(){
+    navigation.navigate('SignUp')
+  }
+  async function handleSignIn({email,password}:FormData){
+    setIsLoading(true);
+    try{
+      await signIn(email,password)
+    }catch(error){
+      const isAppError = error instanceof AppError;
+      const title = isAppError ? error.message :'Não foi possivel entrar. Tente novamnete'
+      setIsLoading(false);
+      toast.show(({
+        title,
+        placement:'top',
+        bgColor:'red.500'
+      }))
+    }
+
+  }
   return (
-    <ScrollView contentContainerStyle={{flexGrow:1}} showsVerticalScrollIndicator={false}>
+    <ScrollView 
+    contentContainerStyle={{flexGrow:1}} 
+    showsVerticalScrollIndicator={false}>
     <VStack flex={1} bg="gray.700" px={10} pb={16}>
     <Image 
      source={BackgroundImage}
@@ -47,7 +84,8 @@ export function SignIn() {
     <Button 
     title='Criar conta'
     variant={'outline'}
-     onPress={()=>navigation.navigate('SignUp')}
+    isLoading={isLoading}
+    onPress={handleSubmit(handleSignIn)}
      />
     </Center>
     </VStack>
