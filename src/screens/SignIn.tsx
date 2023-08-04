@@ -76,16 +76,23 @@ export function SignIn() {
       secureTextEntry
 
     />
-    <Button title='Acessar'/>
+    <Button title='Acessar'  
+    isLoading={isLoading}
+    onPress={handleSubmit(handleSignIn)}/>
 
      </Center>
 <Center pt={24}>
-     <Text  color={'gray.100'} fontSize={'sm' } mb={3} fontFamily={'body'} >Ainda não têm acesso?</Text>
+     <Text  
+     color={'gray.100'} 
+     fontSize={'sm' } 
+     mb={3} 
+     fontFamily={'body'} 
+     >
+      Ainda não têm acesso?</Text>
     <Button 
     title='Criar conta'
     variant={'outline'}
-    isLoading={isLoading}
-    onPress={handleSubmit(handleSignIn)}
+    onPress={handleNewAccount}
      />
     </Center>
     </VStack>
