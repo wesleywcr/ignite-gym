@@ -1,4 +1,5 @@
 import { HistoryCard } from "@components/HistoryCard";
+import { Loading } from "@components/Loading";
 import { ScreenHeader } from "@components/ScreenHeader";
 import { HistoryByDayDTO } from "@dtos/historyByDayDTO";
 import { useFocusEffect } from "@react-navigation/native";
@@ -42,6 +43,9 @@ setExercises(response.data)
     <VStack flex={1}>
     <ScreenHeader title='Histórico de Exercícios'/>
 
+  {isLoading ? <Loading/>
+   :
+  ( 
     <SectionList
       sections={exercises}
       keyExtractor={item => item.id}
@@ -63,6 +67,7 @@ setExercises(response.data)
       )}
       showsVerticalScrollIndicator={false}  
     />
+    )}
    
     </VStack>
   )
