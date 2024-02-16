@@ -81,7 +81,7 @@ export function SignIn() {
     onPress={handleSubmit(handleSignIn)}/>
 
      </Center>
-<Center pt={24}>
+<Center pt={24} px={4}>
      <Text  
      color={'gray.100'} 
      fontSize={'sm' } 
